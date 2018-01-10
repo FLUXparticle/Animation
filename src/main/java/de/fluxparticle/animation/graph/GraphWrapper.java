@@ -1,6 +1,11 @@
 package de.fluxparticle.animation.graph;
 
+import de.fluxparticle.utils.chain.Chain;
+
 import java.util.*;
+
+import static de.fluxparticle.utils.chain.Chain.cons;
+import static de.fluxparticle.utils.chain.Chain.emptyChain;
 
 public class GraphWrapper implements Graph {
 
@@ -8,20 +13,35 @@ public class GraphWrapper implements Graph {
 
 	private final Map<Integer, Set<Integer>> edges = new HashMap<>();
 
-	public GraphWrapper(GraphNode... nodes) {
-		for (GraphNode graphNode : nodes) {
-			Integer id = graphNode.getId();
-			this.nodes.put(id, graphNode);
-			edges.put(id, new HashSet<>());
-		}
-	}
+	public GraphWrapper(Graph graph) {
+        Collection<? extends GraphNode> nodes = graph.getNodes();
+        for (GraphNode node : nodes) {
+            if (node.isReferenced()) {
+                depthFirst(graph, node, emptyChain());
+            }
+        }
+    }
 
-	public void connect(Integer fromId, Integer toId) {
-		Set<Integer> neighbourIds = edges.get(fromId);
-		neighbourIds.add(toId);
-	}
+    private void depthFirst(Graph graph, GraphNode node, Chain<GraphNode> chain) {
+        if (nodes.containsKey(node.getId())) {
+            return;
+        }
 
-	@Override
+        Integer id = node.getId();
+        nodes.put(id, node);
+
+        HashSet<Integer> edgeSet = new HashSet<>();
+        for (GraphNode next : graph.getNeighbours(node)) {
+            if (chain.asStream().noneMatch(next::equals)) {
+                edgeSet.add(next.getId());
+                depthFirst(graph, next, cons(next, chain));
+            }
+        }
+
+        edges.put(id, edgeSet);
+    }
+
+    @Override
 	public Collection<GraphNode> getNodes() {
 		return Collections.unmodifiableCollection(nodes.values());
 	}
