@@ -9,7 +9,6 @@ import javafx.geometry.Bounds;
 import javafx.scene.CacheHint;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.control.Tooltip;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Path;
@@ -81,7 +80,7 @@ public class NodeCreator implements ElementNodeVisitor<Node> {
             if (contentLine != null) {
                 String value = contentLine.getValue();
                 Text text = new Text(value);
-                Tooltip.install(text, new Tooltip(value));
+//                Tooltip.install(text, new Tooltip(value));
 
                 fitText(text, maxContentWidth);
 
@@ -92,7 +91,7 @@ public class NodeCreator implements ElementNodeVisitor<Node> {
 
                     text.setText(newValue);
                     text.setFont(localText.getFont());
-                    Tooltip.install(text, new Tooltip(newValue));
+//                    Tooltip.install(text, new Tooltip(newValue));
 
                     adjustNode(text, center, midY, maxContentWidth);
                 });
