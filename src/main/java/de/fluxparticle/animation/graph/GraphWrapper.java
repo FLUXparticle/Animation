@@ -2,7 +2,7 @@ package de.fluxparticle.animation.graph;
 
 import java.util.*;
 
-public class GraphWrapper implements Graph<GraphNode> {
+public class GraphWrapper implements Graph {
 
 	private final Map<Integer, GraphNode> nodes = new HashMap<>();
 

@@ -7,7 +7,7 @@ import static java.util.stream.Collectors.toSet;
 
 public class GraphSolver {
 
-	private Graph<? extends GraphNode> graph;
+	private Graph graph;
 
 	private final Comparator<GraphNode> comparator = (n1, n2) -> {
         int cmp = 0;
@@ -23,7 +23,7 @@ public class GraphSolver {
         return cmp;
     };
 
-	public GraphSolver(Graph<? extends GraphNode> graph) {
+	public GraphSolver(Graph graph) {
 		this.graph = graph;
 
 		Collection<? extends GraphNode> nodes = graph.getNodes();

@@ -2,10 +2,10 @@ package de.fluxparticle.animation.graph;
 
 import java.util.Collection;
 
-public interface Graph<T extends GraphNode> {
+public interface Graph {
 
-	public Collection<T> getNodes();
+	Collection<? extends GraphNode> getNodes();
 
-	public Collection<T> getNeighbours(GraphNode node);
+	Collection<? extends GraphNode> getNeighbours(GraphNode node);
 
 }

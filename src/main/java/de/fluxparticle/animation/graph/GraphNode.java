@@ -2,20 +2,20 @@ package de.fluxparticle.animation.graph;
 
 public interface GraphNode {
 
-	public int getPreferredPos();
+	int getPreferredPos();
 
-	public void setPos(int pos);
+	void setPos(int pos);
 
-	public void setLevel(int level);
+	void setLevel(int level);
 
-    public void setWhite();
+    void setWhite();
 
-    public void setBlack();
+    void setBlack();
 
-	public int getSize();
+	int getSize();
 
-	public int getId();
+	int getId();
 
-    public boolean isReferenced();
+    boolean isReferenced();
 
 }
