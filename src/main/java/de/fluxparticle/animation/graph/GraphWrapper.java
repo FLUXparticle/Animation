@@ -16,9 +16,7 @@ public class GraphWrapper implements Graph {
 	public GraphWrapper(Graph graph) {
         Collection<? extends GraphNode> nodes = graph.getNodes();
         for (GraphNode node : nodes) {
-            if (node.isReferenced()) {
-                depthFirst(graph, node, emptyChain());
-            }
+            depthFirst(graph, node, emptyChain());
         }
     }
 
