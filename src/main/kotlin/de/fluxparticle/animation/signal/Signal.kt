@@ -1,40 +1,36 @@
 package de.fluxparticle.animation.signal
 
-import com.sun.javafx.animation.TickCalculation
-import de.fluxparticle.animation.binding.BindingFunction
-import javafx.beans.InvalidationListener
-import javafx.beans.binding.DoubleExpression
-import javafx.beans.binding.ObjectBinding
-import javafx.beans.property.ReadOnlyProperty
-import javafx.beans.value.ChangeListener
-import javafx.util.Duration
-import java.util.*
+import de.fluxparticle.animation.value.Value
 
-class Signal<R : Any>(time: DoubleExpression, private val bean: Any, private val name: String, initValue: R) : ReadOnlyProperty<R> {
+fun Double.toTicks() = (this * 6000).toLong()
+fun Long.toSeconds() = this / 6000.0
+fun <K : Comparable<K>, V> MutableMap<K, V>.floorEntry(floor: K): Map.Entry<K, V> {
+    val floorEntry = this
+            .filterKeys { k -> k <= floor }
+            .maxBy { entry -> entry.key }
+    return checkNotNull(floorEntry) { "No such element." }
+}
+fun <K : Comparable<K>, V> MutableMap<K, V>.lastEntry(): Map.Entry<K, V> {
+    val lastEntry = this.maxBy { entry -> entry.key }
+    return checkNotNull(lastEntry) { "No such element." }
+}
 
-    private val keyPoints: TreeMap<Long, SignalFunction<R>>
+class Signal<R : Any>(time: Value<Double>, initValue: R) {
 
-    private val value: ObjectBinding<R>
+    private val keyPoints: MutableMap<Long, SignalFunction<R>> = mutableMapOf(0L to SignalConstant(initValue))
 
-    init {
-
-        keyPoints = TreeMap()
-        keyPoints.put(0L, SignalConstant(initValue))
-
-        value = BindingFunction(time) { this.apply(it) }
-    }
+    val value: Value<R> = time.map { t -> this.apply(t) }
 
     fun lastValue(): R {
         val lastEntry = keyPoints.lastEntry()
-        val t = TickCalculation.toDuration(lastEntry.key).toSeconds()
+        val t = lastEntry.key.toSeconds()
         return lastEntry.value.apply(t)
     }
 
-    fun apply(t: Number): R {
-        val ticks = TickCalculation.fromDuration(Duration.seconds(t.toDouble()))
+    fun apply(t: Double): R {
+        val ticks = t.toTicks()
         val floor = keyPoints.floorEntry(ticks)
-
-        return floor.value.apply(t as Double)
+        return floor.value.apply(t)
     }
 
     fun changeValue(pathBuilder: SignalPath.Builder<R>, newValue: R, ticksStart: Long, ticksDuration: Long) {
@@ -48,44 +44,20 @@ class Signal<R : Any>(time: DoubleExpression, private val bean: Any, private val
         }
 
         if (newValue !== oldValue) {
-            val timeStart = TickCalculation.toDuration(ticksStart).toSeconds()
-            val timeDuration = TickCalculation.toDuration(ticksDuration).toSeconds()
+            val timeStart = ticksStart.toSeconds()
+            val timeDuration = ticksDuration.toSeconds()
 
             val path = pathBuilder.start(oldValue).end(newValue).build()
 
-            keyPoints.put(ticksStart, SignalTransform(timeStart, timeDuration, path))
+            keyPoints[ticksStart] = SignalTransform(timeStart, timeDuration, path)
         }
 
         val ticksEnd = ticksStart + ticksDuration
-        keyPoints.put(ticksEnd, SignalConstant(newValue))
+        keyPoints[ticksEnd] = SignalConstant(newValue)
     }
 
-    override fun getValue(): R {
+    fun getValue(): R {
         return value.value
-    }
-
-    override fun addListener(listener: InvalidationListener) {
-        value.addListener(listener)
-    }
-
-    override fun removeListener(listener: InvalidationListener) {
-        value.removeListener(listener)
-    }
-
-    override fun addListener(listener: ChangeListener<in R>) {
-        value.addListener(listener)
-    }
-
-    override fun removeListener(listener: ChangeListener<in R>) {
-        value.removeListener(listener)
-    }
-
-    override fun getName(): String {
-        return name
-    }
-
-    override fun getBean(): Any {
-        return bean
     }
 
 }

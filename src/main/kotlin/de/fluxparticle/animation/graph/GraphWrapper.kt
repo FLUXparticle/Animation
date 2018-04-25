@@ -1,9 +1,8 @@
 package de.fluxparticle.animation.graph
 
 import de.fluxparticle.utils.chain.Chain
-import de.fluxparticle.utils.chain.Chain.cons
-import de.fluxparticle.utils.chain.Chain.emptyChain
-import java.util.*
+import de.fluxparticle.utils.chain.chainOf
+import de.fluxparticle.utils.chain.cons
 
 class GraphWrapper(graph: Graph) : Graph {
 
@@ -15,9 +14,8 @@ class GraphWrapper(graph: Graph) : Graph {
         get() = nodeMap.values
 
     init {
-        val nodes = graph.nodes
-        for (node in nodes) {
-            depthFirst(graph, node, emptyChain())
+        graph.nodes.forEach { node ->
+            depthFirst(graph, node, chainOf())
         }
     }
 
@@ -41,15 +39,7 @@ class GraphWrapper(graph: Graph) : Graph {
     }
 
     override fun getNeighbours(node: GraphNode): Collection<GraphNode> {
-        val nodeId = node.id
-
-        val neighbours = LinkedList<GraphNode>()
-
-        for (neighbourId in edges[nodeId]!!) {
-            neighbours.add(nodeMap[neighbourId]!!)
-        }
-
-        return neighbours
+        return edges[node.id]!!.map { neighbourId -> nodeMap[neighbourId]!! }
     }
 
 }

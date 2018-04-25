@@ -1,12 +1,6 @@
 package de.fluxparticle.animation.binding
 
-import javafx.beans.InvalidationListener
-import javafx.beans.property.ObjectProperty
-import javafx.beans.property.ReadOnlyObjectProperty
-import javafx.beans.property.SimpleObjectProperty
-import javafx.beans.value.ChangeListener
-import javafx.beans.value.ObservableValue
-
+/*
 class BindingObservableFunction<T, R : ObservableValue<V>, V>(observable: ReadOnlyObjectProperty<T>, func: (T) -> R, name: String) : ReadOnlyObjectProperty<V>() {
 
     private val binding: ObservableValue<R>
@@ -50,3 +44,4 @@ class BindingObservableFunction<T, R : ObservableValue<V>, V>(observable: ReadOn
     }
 
 }
+*/

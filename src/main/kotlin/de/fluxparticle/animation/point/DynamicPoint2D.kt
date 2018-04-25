@@ -1,44 +1,29 @@
 package de.fluxparticle.animation.point
 
-import javafx.animation.Interpolatable
-import javafx.beans.binding.DoubleExpression
-import javafx.beans.property.SimpleDoubleProperty
+import de.fluxparticle.animation.util.Interpolatable
+import de.fluxparticle.animation.value.SimpleValue
+import de.fluxparticle.animation.value.Value
 
 class DynamicPoint2D : Interpolatable<DynamicPoint2D> {
 
-    private val x: DoubleExpression
+    val x: Value<Double>
 
-    private val y: DoubleExpression
+    val y: Value<Double>
 
-    constructor(x: DoubleExpression, y: DoubleExpression) {
+    constructor(x: Value<Double>, y: Value<Double>) {
         this.x = x
         this.y = y
     }
 
     constructor(x: Double, y: Double) {
-        this.x = SimpleDoubleProperty(x)
-        this.y = SimpleDoubleProperty(y)
+        this.x = SimpleValue(x)
+        this.y = SimpleValue(y)
     }
 
     override fun interpolate(endValue: DynamicPoint2D, t: Double): DynamicPoint2D {
-        val x = this.xProperty().multiply(1.0 - t).add(endValue.xProperty().multiply(t))
-        val y = this.yProperty().multiply(1.0 - t).add(endValue.yProperty().multiply(t))
+        val x = this.x.combine(endValue.x) { s, e -> s * (1 - t) + e * t }
+        val y = this.y.combine(endValue.y) { s, e -> s * (1 - t) + e * t }
         return DynamicPoint2D(x, y)
     }
 
-    fun getX(): Double {
-        return x.get()
-    }
-
-    fun xProperty(): DoubleExpression {
-        return x
-    }
-
-    fun getY(): Double {
-        return y.get()
-    }
-
-    fun yProperty(): DoubleExpression {
-        return y
-    }
 }

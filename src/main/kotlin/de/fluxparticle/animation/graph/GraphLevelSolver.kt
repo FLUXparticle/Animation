@@ -1,8 +1,5 @@
 package de.fluxparticle.animation.graph
 
-import java.lang.Integer.compare
-import java.util.*
-
 class GraphLevelSolver(private val nodes: Array<GraphNode>) {
 
     private val maxK: Int
@@ -42,7 +39,7 @@ class GraphLevelSolver(private val nodes: Array<GraphNode>) {
     }
 
     init {
-        Arrays.sort(nodes, COMPARATOR)
+        nodes.sortBy { it.preferredPos }
 
         var maxK = 0
         for (graphNode in nodes) {
@@ -111,12 +108,6 @@ class GraphLevelSolver(private val nodes: Array<GraphNode>) {
         }
 
         return ranges
-    }
-
-    companion object {
-
-        private val COMPARATOR = { o1: GraphNode, o2: GraphNode -> compare(o1.preferredPos, o2.preferredPos) }
-
     }
 
 }

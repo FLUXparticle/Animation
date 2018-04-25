@@ -1,8 +1,6 @@
 package de.fluxparticle.animation.signal
 
-import java.util.function.Function
-
-abstract class SignalPath<T>(protected val start: T, protected val end: T) : Function<Double, T> {
+abstract class SignalPath<T>(protected val start: T, protected val end: T) {
 
     abstract class Builder<T : Any> {
 
@@ -23,5 +21,7 @@ abstract class SignalPath<T>(protected val start: T, protected val end: T) : Fun
         abstract fun build(): SignalPath<T>
 
     }
+
+    abstract fun apply(t: Double): T
 
 }

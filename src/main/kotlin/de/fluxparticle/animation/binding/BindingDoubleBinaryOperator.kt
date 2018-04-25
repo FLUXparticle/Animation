@@ -1,12 +1,9 @@
 package de.fluxparticle.animation.binding
 
-import javafx.beans.binding.DoubleBinding
-import javafx.beans.value.ObservableValue
-
+/*
 class BindingDoubleBinaryOperator(private val t: ObservableValue<out Number>, private val u: ObservableValue<out Number>, private val op: (Double, Double) -> Double) : DoubleBinding() {
 
     init {
-
         bind(t, u)
     }
 
@@ -15,3 +12,4 @@ class BindingDoubleBinaryOperator(private val t: ObservableValue<out Number>, pr
     }
 
 }
+*/

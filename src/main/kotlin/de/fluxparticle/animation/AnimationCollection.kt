@@ -1,24 +1,17 @@
 package de.fluxparticle.animation
 
-import kotlin.collections.HashMap
-import kotlin.collections.ArrayList
-
 class AnimationCollection {
 
     private val animations: MutableMap<Int, MutableList<Timeframe>> = HashMap()
 
     fun add(priority: Int, Timeframe: Timeframe) {
-        var get = animations.get(priority)
-        if (get == null) {
-            get = ArrayList()
-            animations.put(priority, get!!)
-        }
-        get.add(Timeframe)
+        animations.getOrPut(priority, ::mutableListOf).add(Timeframe)
     }
 
     fun appendToClip(clip: Clip) {
-        for (values in animations.values) {
-            clip.invoke(false) {
+        val sortedValues = sortedValues()
+        for (values in sortedValues) {
+            clip.invoke() {
                 values.forEach {
                     clip.addTimeframe(it)
                 }
@@ -27,9 +20,16 @@ class AnimationCollection {
     }
 
     fun appendToClipRaw(clip: Clip) {
-        for (values in animations.values) {
+        val sortedValues = sortedValues()
+        for (values in sortedValues) {
             values.forEach { clip.addTimeframe(it) }
         }
+    }
+
+    private fun sortedValues(): List<MutableList<Timeframe>> {
+        return animations.entries
+                .sortedBy { entry -> entry.key }
+                .map { entry -> entry.value }
     }
 
 }

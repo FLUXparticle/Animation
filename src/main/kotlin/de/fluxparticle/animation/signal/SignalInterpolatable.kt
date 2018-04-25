@@ -1,6 +1,6 @@
 package de.fluxparticle.animation.signal
 
-import javafx.animation.Interpolatable
+import de.fluxparticle.animation.util.Interpolatable
 
 class SignalInterpolatable<T : Interpolatable<T>>(start: T, end: T) : SignalPath<T>(start, end) {
 
