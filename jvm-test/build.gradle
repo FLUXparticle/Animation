@@ -9,14 +9,13 @@ buildscript {
     }
 }
 
-apply plugin: 'kotlin-platform-js'
+apply plugin: 'kotlin-platform-jvm'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-js:$kotlin_version"
-    expectedBy project(":")
-    testCompile "org.jetbrains.kotlin:kotlin-test-js:$kotlin_version"
+    compile project(":jvm")
+    expectedBy project(":bubblesort")
 }

@@ -55,11 +55,9 @@ class BubbleSortAnimation : Application() {
                 run {
                     val animationQueue = AnimationQueue(clip)
                     val box = BubbleSortBox(animationQueue)
-                    val algorithm = BubbleSortAlgorithm(box)
-
                     val bounds = box.bounds
 
-                    algorithm.run()
+                    bubbleSortAlgorithm(box)
 
                     pane.prefWidth = bounds.width
                     pane.prefHeight = bounds.height
@@ -106,16 +104,15 @@ class BubbleSortAnimation : Application() {
     }
 
     private fun playNextAnimation(): Boolean {
-        when (Part.values()[curPart]) {
-            BubbleSortAnimation.Part.CLIP -> return clip!!.playNextSequence() == null
-            BubbleSortAnimation.Part.FADE_OUT -> {
+        return when (Part.values()[curPart]) {
+            Part.CLIP -> clip.playNextSequence() == null
+            Part.FADE_OUT -> {
                 val fadeOutAnimation = FadeTransition(Duration.seconds(1.0), animationSide)
                 fadeOutAnimation.toValue = 0.0
                 fadeOutAnimation.play()
-                return true
+                true
             }
         }
-        return true
     }
 
 }

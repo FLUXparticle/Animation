@@ -14,7 +14,7 @@ class Log private constructor(level: Int) {
     }
 
     fun info(line: String) {
-        //		System.out.println(indent + line);
+        println(indent + line);
     }
 
     companion object {

@@ -8,7 +8,10 @@ import de.fluxparticle.animation.signal.Signal
 import de.fluxparticle.animation.util.Bounds
 import de.fluxparticle.animation.util.Color
 import de.fluxparticle.animation.value.Value
-import java.util.concurrent.atomic.AtomicReference
+
+class Wrapper<T> {
+    var data: T? = null
+}
 
 /**
  * Created by sreinck on 09.02.16.
@@ -23,15 +26,15 @@ class BubbleSortBox(private val animationQueue: AnimationQueue) {
         }
     }
 
-    private var rectangleCompare = AtomicReference<ElementRectangle>()
+    private var rectangleCompare = Wrapper<ElementRectangle>()
 
-    private var rectangleReady = AtomicReference<ElementRectangle>()
+    private var rectangleReady = Wrapper<ElementRectangle>()
 
     val bounds: Bounds
         get() = Bounds(0.0, 0.0, (SPACING + array.size * (WIDTH + SPACING)).toDouble(), (2 * SPACING + HEIGHT).toDouble())
 
     init {
-        animationQueue.with { aq, t ->
+        animationQueue.with { aq, _ ->
             for (i in array.indices) {
                 aq.fadeIn(0, elementObjects[i])
             }
@@ -50,10 +53,10 @@ class BubbleSortBox(private val animationQueue: AnimationQueue) {
             val bs = surround(index, 2)
 
             val colorCompare = Color.BLUE
-            rectangleCompare.createOrMove(aq, t, bs, colorCompare)
+            val rectangle = rectangleCompare.createOrMove(aq, t, bs, colorCompare)
 
             val c = if (result) Color.GREEN else Color.RED
-            aq.changeColor(1, rectangleCompare.get(), c)
+            aq.changeColor(1, rectangle, c)
         }
 
         return result
@@ -67,7 +70,7 @@ class BubbleSortBox(private val animationQueue: AnimationQueue) {
             array[next] = tmp
         }
 
-        animationQueue.with { aq, t ->
+        animationQueue.with { aq, _ ->
             aq.move(0, elementObjects[index], center(next), false, null, true)
             aq.move(0, elementObjects[next], center(index), false, null, true)
 
@@ -81,10 +84,10 @@ class BubbleSortBox(private val animationQueue: AnimationQueue) {
         val range = array.size - index
 
         animationQueue.with { aq, t ->
-            val rectangle = rectangleCompare.get()
+            val rectangle = rectangleCompare.data
             if (rectangle != null) {
                 aq.fadeOut(-1, rectangle)
-                rectangleCompare.set(null)
+                rectangleCompare.data = null
             }
 
             val bs = surround(index, range)
@@ -113,14 +116,16 @@ class BubbleSortBox(private val animationQueue: AnimationQueue) {
 
 }
 
-private fun AtomicReference<ElementRectangle>.createOrMove(aq: AnimationQueue, t: Value<Double>, bs: Bounds, colorReady: Color) {
-    val rectangle = this.get()
+private fun Wrapper<ElementRectangle>.createOrMove(aq: AnimationQueue, t: Value<Double>, bs: Bounds, colorReady: Color): ElementRectangle {
+    val rectangle = this.data
     if (rectangle == null) {
         val newRectangle = ElementRectangle(t, bs, colorReady)
         aq.fadeIn(0, newRectangle)
-        set(newRectangle)
+        this.data = newRectangle
+        return newRectangle
     } else {
         aq.adjustAreaToBounds(0, rectangle, bs)
         aq.changeColor(0, rectangle, colorReady)
+        return rectangle
     }
 }

@@ -29,7 +29,7 @@ fun <T : Any> Value<T>.toObservableValue(): ObservableValue<T> {
 
 fun <T : Any> SimpleValue<T>.toWritableValue(): WritableValue<T> {
     val property = SimpleObjectProperty<T>(value)
-    property.addListener { observable, oldValue, newValue -> value = newValue }
+    property.addListener { _, _, newValue -> value = newValue }
     return property
 }
 
