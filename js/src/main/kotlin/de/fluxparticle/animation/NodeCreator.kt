@@ -5,6 +5,8 @@ import de.fluxparticle.animation.elementobject.ElementObject
 import de.fluxparticle.animation.elementobject.ElementPath
 import de.fluxparticle.animation.elementobject.ElementRectangle
 import de.fluxparticle.animation.signal.Signal
+import de.fluxparticle.animation.util.Color
+import de.fluxparticle.animation.value.Value
 import org.w3c.dom.svg.*
 import kotlin.browser.document
 
@@ -23,6 +25,18 @@ fun newSVGSVG(width: Float, height: Float): SVGSVGElement = newSVGSVG().apply {
 
 private fun newSVGRect() = newSVG("rect") as SVGRectElement
 
+private fun newSVGRect(x: Float, y: Float, width: Float, height: Float, fill: Color) = newSVGRect().apply {
+    this.x.baseVal.valueAsString = x.toString()
+    this.y.baseVal.valueAsString = y.toString()
+    this.width.baseVal.valueAsString = width.toString()
+    this.height.baseVal.valueAsString = height.toString()
+    this.setAttribute("fill", fill.toString())
+}
+
+private fun newSVGGroup() = newSVG("g") as SVGGElement
+
+private fun newSVGText() = newSVG("text") as SVGTextElement
+
 class NodeCreator : ElementNodeVisitor<SVGElement> {
 
     override fun visitPath(elementPath: ElementPath): SVGElement {
@@ -34,30 +48,39 @@ class NodeCreator : ElementNodeVisitor<SVGElement> {
         bindLength(y, elementRectangle.y)
         bindLength(width, elementRectangle.width)
         bindLength(height, elementRectangle.height)
-        bindAttribute("fill", elementRectangle.fill)
-        bindAttribute("fill-opacity", elementRectangle.opacity)
+        bindAttribute("fill", elementRectangle.fill.value)
+        bindAttribute("fill-opacity", elementRectangle.opacity.value)
     }
 
-    override fun visitObject(elementObject: ElementObject): SVGElement = newSVGRect().apply {
-        val width = ElementObject.OPERAND_WIDTH
-        val height = ElementObject.HEIGHT
+    override fun visitObject(elementObject: ElementObject): SVGElement = newSVGGroup().apply {
+        val width = ElementObject.OPERAND_WIDTH.toFloat()
+        val height = ElementObject.HEIGHT.toFloat()
 
-        this.width.baseVal.valueAsString = width.toString()
-        this.height.baseVal.valueAsString = height.toString()
-
-        x.baseVal.valueAsString = (elementObject.translate.getValue().x.value - width/2).toString()
-        y.baseVal.valueAsString = (elementObject.translate.getValue().y.value - height/2).toString()
-        elementObject.translate.value.addObserver { newValue ->
-            x.baseVal.valueAsString = (newValue.x.value - width/2).toString()
-            y.baseVal.valueAsString = (newValue.y.value - height/2).toString()
+        if (elementObject.isUseRect) {
+            val rectOuter = newSVGRect(-width / 2, -height / 2, width, height, Color.BLACK)
+            val rectInner = newSVGRect(-width / 2 + 1, -height / 2 + 1, width - 2, height - 2, Color.WHITE)
+            appendChild(rectOuter)
+            appendChild(rectInner)
         }
+
+        run {
+            val headLine = elementObject.headLine
+            val text = newSVGText()
+            text.textContent = headLine
+            text.setAttribute("text-anchor", "middle")
+            text.setAttribute("alignment-baseline", "middle")
+            appendChild(text)
+        }
+
+        val translate = elementObject.translate.value.map { "translate(${it.x.value}, ${it.y.value})" }
+        bindAttribute("transform", translate)
     }
 
 }
 
-private fun <T : Any> SVGGraphicsElement.bindAttribute(name: String, signal: Signal<T>) {
-    setAttribute(name, signal.getValue().toString())
-    signal.value.addObserver { newValue ->
+private fun <T : Any> SVGElement.bindAttribute(name: String, value: Value<T>) {
+    setAttribute(name, value.value.toString())
+    value.addObserver { newValue ->
         setAttribute(name, newValue.toString())
     }
 }
@@ -68,4 +91,3 @@ private fun bindLength(length: SVGAnimatedLength, signal: Signal<Double>) {
         length.baseVal.valueAsString = newValue.toString()
     }
 }
-
