@@ -1,33 +1,21 @@
-ext {
-    guice_version = '4.1.0'
-    jetty_version = '9.2.20.v20161216'
-    wicket_version = '7.9.0'
-}
-
 buildscript {
+    ext.kotlin_version = '1.2.21'
+
     repositories {
         mavenCentral()
     }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
 }
 
-apply plugin: 'application'
-mainClassName = "de.fluxparticle.animation.AnimationTestServer"
+apply plugin: 'kotlin-platform-js'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    compile group: 'org.eclipse.jetty', name: 'jetty-servlet', version: jetty_version
-
-    compile group: 'org.apache.wicket', name: 'wicket-core', version: wicket_version
-    compile group: 'org.apache.wicket', name: 'wicket-guice', version: wicket_version
-
-    compile group: 'com.google.inject', name: 'guice', version: guice_version
-    compile group: 'com.google.inject.extensions', name: 'guice-assistedinject', version: guice_version
-    compile group: 'com.google.inject.extensions', name: 'guice-servlet', version: guice_version
-
-    compile group: 'org.slf4j', name: 'slf4j-jdk14', version: '1.7.21'
-
-    runtime project(":js")
+    compile project(":js")
+    expectedBy project(":bubblesort")
 }

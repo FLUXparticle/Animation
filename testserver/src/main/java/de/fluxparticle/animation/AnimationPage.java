@@ -12,7 +12,7 @@ public class AnimationPage extends WebPage {
 
     @Override
     public void renderHead(IHeaderResponse response) {
-        AnimationJsReference reference = new AnimationJsReference();
+        AnimationJsTestReference reference = new AnimationJsTestReference();
         JavaScriptReferenceHeaderItem headerItem = JavaScriptHeaderItem.forReference(reference);
         response.render(headerItem);
     }
