@@ -4,7 +4,7 @@ import de.fluxparticle.animation.signal.SignalEvent
 import de.fluxparticle.animation.signal.toTicks
 import de.fluxparticle.animation.value.SimpleValue
 
-abstract class Clip {
+open class Clip {
 
     protected val time = SimpleValue(0.0)
 

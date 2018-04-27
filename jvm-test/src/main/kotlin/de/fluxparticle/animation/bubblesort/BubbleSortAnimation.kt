@@ -22,7 +22,7 @@ import org.fxmisc.easybind.EasyBind.map
  */
 class BubbleSortAnimation : Application() {
 
-    private var animationSide: Pane? = null
+    private lateinit var animationSide: Pane
 
     private var curPart = 0
 
@@ -42,12 +42,12 @@ class BubbleSortAnimation : Application() {
 
         run {
             animationSide = Pane()
-            animationSide!!.background = Background(BackgroundFill(Color.TRANSPARENT, null, null))
+            animationSide.background = Background(BackgroundFill(Color.TRANSPARENT, null, null))
 
-            animationSide!!.boundsInLocalProperty().addListener { observable, oldValue, newValue -> println("animationSide: " + newValue) }
+            animationSide.boundsInLocalProperty().addListener { observable, oldValue, newValue -> println("animationSide: " + newValue) }
 
-            animationSide!!.prefWidth = 1280.0
-            animationSide!!.prefHeight = 720.0
+            animationSide.prefWidth = 1280.0
+            animationSide.prefHeight = 720.0
 
             run {
                 val pane = Pane()
@@ -76,7 +76,7 @@ class BubbleSortAnimation : Application() {
                     pane.translateYProperty().bind(map(root.heightProperty().asObject()) { h -> (h - bounds.height) / 2 })
 
                     //                    System.out.println("box: " + bounds);
-                    animationSide!!.children.add(pane)
+                    animationSide.children.add(pane)
                 }
 
                 scale(pane, 2.0)

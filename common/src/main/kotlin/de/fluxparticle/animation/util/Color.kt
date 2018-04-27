@@ -16,6 +16,10 @@ data class Color(val red: Double, val green: Double, val blue: Double) : Interpo
         )
     }
 
+    override fun toString(): String {
+        return "rgb(${byte(red)},${byte(green)},${byte(blue)})"
+    }
+
     companion object {
 
         val BLACK = Color(0.0, 0.0, 0.0)
@@ -30,3 +34,5 @@ data class Color(val red: Double, val green: Double, val blue: Double) : Interpo
 
     }
 }
+
+private fun byte(value: Double): Int = (value * 255).toInt()
