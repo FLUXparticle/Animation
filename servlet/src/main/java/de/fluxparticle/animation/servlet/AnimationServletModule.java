@@ -1,4 +1,4 @@
-package de.fluxparticle.animation;
+package de.fluxparticle.animation.servlet;
 
 import com.google.inject.Injector;
 import com.google.inject.Singleton;

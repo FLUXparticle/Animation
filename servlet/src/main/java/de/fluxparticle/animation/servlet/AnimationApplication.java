@@ -1,4 +1,4 @@
-package de.fluxparticle.animation;
+package de.fluxparticle.animation.servlet;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.markup.html.PackageResourceGuard;

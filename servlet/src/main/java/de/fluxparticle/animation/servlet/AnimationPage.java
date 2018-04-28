@@ -1,4 +1,4 @@
-package de.fluxparticle.animation;
+package de.fluxparticle.animation.servlet;
 
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
