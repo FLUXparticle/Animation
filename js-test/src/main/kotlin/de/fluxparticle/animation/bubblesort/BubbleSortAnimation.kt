@@ -22,6 +22,7 @@ fun main(args: Array<String>) {
 
     var time: Double = 0.0
 
+    var intervalId: dynamic = null
     window.onload = {
         val svg = newSVGSVG(bounds.width.toFloat(), bounds.height.toFloat()).apply {
             nodes.forEach { appendChild(it) }
@@ -30,8 +31,11 @@ fun main(args: Array<String>) {
         val handler = {
             time += 0.1
             clip.timeProperty().value = time
+            if (time > clip.length) {
+                window.clearInterval(intervalId)
+            }
         }
-        window.setInterval(handler, 100)
-
+        intervalId = window.setInterval(handler, 100)
+        null
     }
 }

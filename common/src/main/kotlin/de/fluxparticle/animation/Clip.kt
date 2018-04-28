@@ -1,6 +1,7 @@
 package de.fluxparticle.animation
 
 import de.fluxparticle.animation.signal.SignalEvent
+import de.fluxparticle.animation.signal.toSeconds
 import de.fluxparticle.animation.signal.toTicks
 import de.fluxparticle.animation.value.SimpleValue
 
@@ -13,6 +14,9 @@ open class Clip {
     private var ticksBegin: Long = 0
 
     protected val keyframes = mutableListOf(0L)
+
+    val length: Double
+        get() = clipTicks.toSeconds()
 
 //    private val signals = HashMap<String, Signal<*>>()
 
