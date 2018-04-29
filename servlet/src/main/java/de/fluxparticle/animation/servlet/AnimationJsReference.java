@@ -26,7 +26,7 @@ class AnimationJsReference extends ResourceReference {
 
     @Override
     public IResource getResource() {
-        return new JavaScriptPackageResource(getClass(), "../../../../animation-js.js", null, null, null);
+        return new JavaScriptPackageResource(getClass(), "/animation-js.js", null, null, null);
     }
 
 }

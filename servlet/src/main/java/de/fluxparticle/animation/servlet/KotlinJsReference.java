@@ -15,7 +15,7 @@ class KotlinJsReference extends ResourceReference {
 
     @Override
     public IResource getResource() {
-        return new JavaScriptPackageResource(getClass(), "../../../../kotlin.js", null, null, null);
+        return new JavaScriptPackageResource(getClass(), "/kotlin.js", null, null, null);
     }
 
 }
