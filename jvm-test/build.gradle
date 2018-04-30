@@ -17,5 +17,5 @@ repositories {
 
 dependencies {
     compile project(":jvm")
-    expectedBy project(":bubblesort")
+    expectedBy project(":example")
 }

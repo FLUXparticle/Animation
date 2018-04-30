@@ -17,5 +17,5 @@ repositories {
 
 dependencies {
     compile project(":js")
-    expectedBy project(":bubblesort")
+    expectedBy project(":example")
 }

@@ -1,4 +1,4 @@
-package de.fluxparticle.animation.bubblesort
+package de.fluxparticle.animation.example
 
 import de.fluxparticle.animation.AnimationQueue
 import de.fluxparticle.animation.Clip

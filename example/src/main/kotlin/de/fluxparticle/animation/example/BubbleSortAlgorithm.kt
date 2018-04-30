@@ -1,4 +1,4 @@
-package de.fluxparticle.animation.bubblesort
+package de.fluxparticle.animation.example
 
 /**
  * Created by sreinck on 09.02.16.
