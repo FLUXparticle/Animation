@@ -1,0 +1,18 @@
+buildscript {
+    ext {
+        kotlin_version = '1.2.41'
+        coroutines_version = '0.22.5'
+    }
+}
+
+allprojects {
+    buildscript {
+        repositories {
+            mavenCentral()
+        }
+    }
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+}
