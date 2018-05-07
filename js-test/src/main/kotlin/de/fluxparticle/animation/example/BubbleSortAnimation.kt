@@ -13,10 +13,8 @@ import kotlin.browser.window
 fun main(args: Array<String>) {
     val clip = Clip()
     val animationQueue = AnimationQueue(clip)
-    val box = BubbleSortBox(animationQueue)
+    val box = bubbleSortAlgorithm(animationQueue)
     val bounds = box.bounds
-
-    bubbleSortAlgorithm(box)
 
     val nodes = animationQueue.getVisitedGroup(NodeCreator())
 
