@@ -5,7 +5,7 @@
 
     <!--- Listener -->
     <listener>
-        <listener-class>de.fluxparticle.animation.servlet.AnimationServletConfig</listener-class>
+        <listener-class>de.fluxparticle.animation.servlet.config.AnimationServletConfig</listener-class>
     </listener>
 
     <!-- Filter -->

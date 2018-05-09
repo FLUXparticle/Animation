@@ -40,6 +40,8 @@ dependencies {
     compile group: 'com.google.inject.extensions', name: 'guice-assistedinject', version: guice_version
     compile group: 'com.google.inject.extensions', name: 'guice-servlet', version: guice_version
 
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.8.4'
+
     compile group: 'org.slf4j', name: 'slf4j-jdk14', version: '1.7.21'
 
     compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'

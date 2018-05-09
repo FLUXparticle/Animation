@@ -1,4 +1,4 @@
-package de.fluxparticle.animation.servlet;
+package de.fluxparticle.animation.servlet.config;
 
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
@@ -11,8 +11,8 @@ import static com.google.inject.Guice.createInjector;
 public class AnimationServletConfig extends GuiceServletContextListener {
 
     @Override
-    protected Injector getInjector() {
-        return createInjector(new AnimationServletModule(true));
+    public Injector getInjector() {
+        return createInjector(new AnimationServletModule(true), new AnimationModule());
     }
 
 }

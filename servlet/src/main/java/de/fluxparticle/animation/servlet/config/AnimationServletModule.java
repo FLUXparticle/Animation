@@ -1,8 +1,9 @@
-package de.fluxparticle.animation.servlet;
+package de.fluxparticle.animation.servlet.config;
 
 import com.google.inject.Injector;
 import com.google.inject.Singleton;
 import com.google.inject.servlet.ServletModule;
+import de.fluxparticle.animation.servlet.AnimationApplication;
 import org.apache.wicket.guice.GuiceWebApplicationFactory;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WicketFilter;
