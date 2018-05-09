@@ -14,15 +14,13 @@ import de.fluxparticle.animation.util.Bounds
 /**
  * Created by sreinck on 30.04.18.
  */
-fun dependencyAlgorithm(animationQueue: AnimationQueue): Box = DependencyBox(animationQueue).apply {
+class DependencyAlgorithm(private val dependencyGraph: DependencyGraph) : Algorithm {
+
+    override fun render(animationQueue: AnimationQueue): Box = DependencyBox(animationQueue, dependencyGraph)
 
 }
 
-private class DependencyBox(private val animationQueue: AnimationQueue): Box {
-
-    private val artifacts = listOf(Artifact("A", 0), Artifact("B", 1))
-    
-    private val dependencyGraph = DependencyGraph(artifacts, mapOf(0 to listOf(artifacts[1]), 1 to listOf()))
+private class DependencyBox(private val animationQueue: AnimationQueue, private val dependencyGraph: DependencyGraph): Box {
 
     override val bounds: Bounds
 
@@ -79,7 +77,7 @@ private class DependencyBox(private val animationQueue: AnimationQueue): Box {
     
 }
 
-private class DependencyGraph(private val artifacts: Collection<Artifact>, private val dependencies: Map<Int, List<Artifact>>) : Graph {
+class DependencyGraph(private val artifacts: Collection<Artifact>, private val dependencies: Map<Int, List<Artifact>>) : Graph {
 
     override val nodes: Collection<Artifact>
         get() = artifacts
@@ -90,7 +88,7 @@ private class DependencyGraph(private val artifacts: Collection<Artifact>, priva
 
 }
 
-private class Artifact(private val name: String, override val id: Int) : GraphNode {
+class Artifact(val name: String, override val id: Int) : GraphNode {
 
     private var level: Int = 0
 

@@ -1,19 +1,39 @@
 package de.fluxparticle.animation.example
 
-import de.fluxparticle.animation.*
+import de.fluxparticle.animation.AnimationQueue
+import de.fluxparticle.animation.Clip
+import de.fluxparticle.animation.JsNodeCreator
+import de.fluxparticle.animation.newSVGSVG
 import kotlin.browser.document
 import kotlin.browser.window
 
 /**
  * Created by sreinck on 26.04.18.
  */
-typealias Algorithm = (animationQueue: AnimationQueue) -> Box
+@JsName("start")
+fun start(input: dynamic) {
+    val graphDescription = mutableMapOf<String, Array<String>>()
 
-fun main(args: Array<String>) {
+    for (b in input) {
+        val name: String = b.name
+        val deps: Array<String> = b.deps
+        graphDescription[name] = deps
+    }
+
+    val artifacts = graphDescription.keys
+            .mapIndexed { index, name -> Artifact(name, index) }
+            .associateBy { it.name }
+
+    val dependencies = artifacts.values.associateBy(
+            keySelector = { it.id },
+            valueTransform = { graphDescription[it.name]!!.map { artifacts[it]!! } }
+    )
+
+    val dependencyGraph = DependencyGraph(artifacts.values, dependencies)
 
     val algorithms: List<Algorithm> = listOf(
-            ::dependencyAlgorithm,
-            ::bubbleSortAlgorithm
+            DependencyAlgorithm(dependencyGraph),
+            BubbleSortAlgorithm()
     )
 
     var time: Double = 0.0
@@ -23,7 +43,7 @@ fun main(args: Array<String>) {
             var intervalId: dynamic = null
             val clip = Clip()
             val animationQueue = AnimationQueue(clip)
-            val box = algorithm(animationQueue)
+            val box = algorithm.render(animationQueue)
             val bounds = box.bounds
 
             val nodes = animationQueue.getVisitedGroup(JsNodeCreator())

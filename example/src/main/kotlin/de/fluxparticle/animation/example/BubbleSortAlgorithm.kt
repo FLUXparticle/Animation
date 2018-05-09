@@ -13,14 +13,16 @@ import de.fluxparticle.animation.value.Value
 /**
  * Created by sreinck on 09.02.16.
  */
-fun bubbleSortAlgorithm(animationQueue: AnimationQueue): Box = BubbleSortBox(animationQueue).apply {
-    for (top in size() - 1 downTo 0) {
-        for (i in 0 until top) {
-            if (!inOrder(i)) {
-                swap(i)
+class BubbleSortAlgorithm : Algorithm {
+    override fun render(animationQueue: AnimationQueue): Box = BubbleSortBox(animationQueue).apply {
+        for (top in size() - 1 downTo 0) {
+            for (i in 0 until top) {
+                if (!inOrder(i)) {
+                    swap(i)
+                }
             }
+            ready(top)
         }
-        ready(top)
     }
 }
 

@@ -54,7 +54,7 @@ class BubbleSortAnimation : Application() {
 
                 run {
                     val animationQueue = AnimationQueue(clip)
-                    val box = bubbleSortAlgorithm(animationQueue)
+                    val box = BubbleSortAlgorithm().render(animationQueue)
                     val bounds = box.bounds
 
                     pane.prefWidth = bounds.width
