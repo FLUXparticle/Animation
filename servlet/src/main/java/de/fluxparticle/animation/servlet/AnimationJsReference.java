@@ -14,7 +14,7 @@ import java.util.List;
 class AnimationJsReference extends ResourceReference {
 
     public AnimationJsReference() {
-        super("animation-js.js");
+        super("js.js");
     }
 
     @Override
@@ -26,7 +26,7 @@ class AnimationJsReference extends ResourceReference {
 
     @Override
     public IResource getResource() {
-        return new JavaScriptPackageResource(getClass(), "/animation-js.js", null, null, null);
+        return new JavaScriptPackageResource(getClass(), "/js.js", null, null, null);
     }
 
 }

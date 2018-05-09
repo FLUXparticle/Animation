@@ -1,6 +1,7 @@
 package de.fluxparticle.animation.example
 
 import de.fluxparticle.animation.AnimationQueue
+import de.fluxparticle.animation.Box
 import de.fluxparticle.animation.elementobject.ElementObject
 import de.fluxparticle.animation.elementobject.ElementRectangle
 import de.fluxparticle.animation.point.DynamicPoint2D
@@ -12,7 +13,7 @@ import de.fluxparticle.animation.value.Value
 /**
  * Created by sreinck on 09.02.16.
  */
-fun bubbleSortAlgorithm(animationQueue: AnimationQueue) = BubbleSortBox(animationQueue).apply {
+fun bubbleSortAlgorithm(animationQueue: AnimationQueue): Box = BubbleSortBox(animationQueue).apply {
     for (top in size() - 1 downTo 0) {
         for (i in 0 until top) {
             if (!inOrder(i)) {
@@ -27,7 +28,7 @@ private class Wrapper<T> {
     var data: T? = null
 }
 
-class BubbleSortBox(private val animationQueue: AnimationQueue) {
+private class BubbleSortBox(private val animationQueue: AnimationQueue): Box {
 
     private val array = intArrayOf(13, 4, 3, 21, 1)
 
@@ -41,7 +42,7 @@ class BubbleSortBox(private val animationQueue: AnimationQueue) {
 
     private var rectangleReady = Wrapper<ElementRectangle>()
 
-    val bounds: Bounds
+    override val bounds: Bounds
         get() = Bounds(0.0, 0.0, (SPACING + array.size * (WIDTH + SPACING)).toDouble(), (2 * SPACING + HEIGHT).toDouble())
 
     init {

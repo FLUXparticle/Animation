@@ -13,6 +13,10 @@ class ElementObject(private val time: Value<Double>, val isUseRect: Boolean, val
 
     val circle: DynamicPoint2D?
 
+    fun setTranslate(translate: DynamicPoint2D) {
+        this.translate = Signal(this.time, translate)
+    }
+
     init {
         val firstLine: String = lines[0]!!
         if (firstLine.contains(".")) {

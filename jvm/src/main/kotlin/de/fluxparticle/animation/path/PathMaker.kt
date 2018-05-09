@@ -11,8 +11,6 @@ import javafx.scene.shape.Path
 
 object PathMaker {
 
-    val ARROW_SIZE = 5
-
     fun mkCurveEastWest(origin: Point2D, dest: Point2D): Path {
         val dx = dest.x - origin.x
         val dy = dest.y - origin.y

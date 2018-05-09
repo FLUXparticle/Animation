@@ -2,7 +2,7 @@ package de.fluxparticle.animation.example
 
 import de.fluxparticle.animation.AnimationQueue
 import de.fluxparticle.animation.ClipJvm
-import de.fluxparticle.animation.NodeCreator
+import de.fluxparticle.animation.JavaNodeCreator
 import javafx.animation.FadeTransition
 import javafx.application.Application
 import javafx.scene.Node
@@ -67,7 +67,7 @@ class BubbleSortAnimation : Application() {
                         pane.children.add(rectangle)
                     }
 
-                    val nodes = animationQueue.getVisitedGroup(NodeCreator())
+                    val nodes = animationQueue.getVisitedGroup(JavaNodeCreator())
                     pane.children.addAll(nodes)
 
                     pane.translateXProperty().bind(map(root.widthProperty().asObject()) { w -> (w - bounds.width) / 2 })

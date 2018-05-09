@@ -14,9 +14,9 @@ public class AnimationApplication extends WebApplication {
         PackageResourceGuard packageResourceGuard = (PackageResourceGuard) getResourceSettings().getPackageResourceGuard();
         packageResourceGuard.setAllowAccessToRootResources(true);
 
-        mountResource("animation-js-test.js", new AnimationJsTestReference());
-        mountResource("animation-js.js", new AnimationJsReference());
-        mountResource("kotlin.js", new KotlinJsReference());
+        mountResource("/js-test.js", new AnimationJsTestReference());
+        mountResource("/js.js", new AnimationJsReference());
+        mountResource("/kotlin.js", new KotlinJsReference());
     }
 
     @Override

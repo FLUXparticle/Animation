@@ -14,7 +14,7 @@ import java.util.List;
 class AnimationJsTestReference extends ResourceReference {
 
     public AnimationJsTestReference() {
-        super("animation-js-test.js");
+        super("js-test.js");
     }
 
     @Override
@@ -26,7 +26,7 @@ class AnimationJsTestReference extends ResourceReference {
 
     @Override
     public IResource getResource() {
-        return new JavaScriptPackageResource(getClass(), "/animation-js-test.js", null, null, null);
+        return new JavaScriptPackageResource(getClass(), "/js-test.js", null, null, null);
     }
 
 }

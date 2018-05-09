@@ -41,7 +41,7 @@ fun Value<Double>.toDoubleExpression(): DoubleExpression {
 
 fun <R : Any> Signal<R>.toObservableValue(): ObservableValue<R> = this.value.toObservableValue()
 
-class NodeCreator : ElementNodeVisitor<Node> {
+class JavaNodeCreator : ElementNodeVisitor<Node> {
 
     override fun visitPath(elementPath: ElementPath): Node {
         val path = PathMaker.mkDynamicCurveEastEast(elementPath.origin, elementPath.dest)

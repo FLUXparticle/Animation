@@ -1,5 +1,4 @@
-apply plugin: 'application'
-mainClassName = "de.fluxparticle.animation.servlet.AnimationTestServer"
+apply plugin: 'kotlin'
 
 repositories {
     mavenCentral()
@@ -10,6 +9,7 @@ ext {
 }
 
 dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     compile group: 'org.eclipse.jetty', name: 'jetty-servlet', version: jetty_version
     compile project(":servlet")
 }

@@ -25,6 +25,8 @@ fun newSVGSVG(width: Float, height: Float): SVGSVGElement = newSVGSVG().apply {
 
 private fun newSVGRect() = newSVG("rect") as SVGRectElement
 
+private fun newSVGPath() = newSVG("path") as SVGPathElement
+
 private fun newSVGRect(x: Float, y: Float, width: Float, height: Float, fill: Color) = newSVGRect().apply {
     this.x.baseVal.valueAsString = x.toString()
     this.y.baseVal.valueAsString = y.toString()
@@ -37,10 +39,15 @@ private fun newSVGGroup() = newSVG("g") as SVGGElement
 
 private fun newSVGText() = newSVG("text") as SVGTextElement
 
-class NodeCreator : ElementNodeVisitor<SVGElement> {
+class JsNodeCreator : ElementNodeVisitor<SVGElement> {
 
-    override fun visitPath(elementPath: ElementPath): SVGElement {
-        TODO("not implemented")
+    override fun visitPath(elementPath: ElementPath) = newSVGPath().apply {
+        val origin = elementPath.origin.x.combine(elementPath.origin.y) { x, y -> "M$x $y" }
+        val dest = elementPath.dest.x.combine(elementPath.dest.y) { x, y -> " L$x $y" }
+        val d = origin.combine(dest, String::concat)
+        bindAttribute("d", d)
+        setAttribute("stroke", "black")
+        setAttribute("stroke-width", "2")
     }
 
     override fun visitRectangle(elementRectangle: ElementRectangle): SVGElement = newSVGRect().apply {
