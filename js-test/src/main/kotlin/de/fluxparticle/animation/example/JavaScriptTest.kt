@@ -35,13 +35,13 @@ fun main(args: Array<String>) {
             div.appendChild(svg)
             document.body?.appendChild(div)
             val handler = {
-                time += 0.1
+                time += 0.017
                 clip.timeProperty().value = time
                 if (time > clip.length) {
                     window.clearInterval(intervalId)
                 }
             }
-            intervalId = window.setInterval(handler, 100)
+            intervalId = window.setInterval(handler, 17)
         }
     }
 }
