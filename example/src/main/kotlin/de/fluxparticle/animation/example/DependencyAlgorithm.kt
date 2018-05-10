@@ -77,7 +77,24 @@ private class DependencyBox(private val animationQueue: AnimationQueue, private 
     
 }
 
-class DependencyGraph(private val artifacts: Collection<Artifact>, private val dependencies: Map<Int, List<Artifact>>) : Graph {
+class DependencyGraph(graphDescription: MutableMap<String, Array<String>>) : Graph {
+
+    private val dependencies: Map<Int, List<Artifact>>
+
+    private val artifacts: Collection<Artifact>
+
+    init {
+        val artifactsMap = graphDescription.keys
+                .mapIndexed { index, name -> Artifact(name, index) }
+                .associateBy { it.name }
+
+        artifacts = artifactsMap.values
+
+        dependencies = artifacts.associateBy(
+                keySelector = { it.id },
+                valueTransform = { graphDescription[it.name]!!.map { artifactsMap[it]!! } }
+        )
+    }
 
     override val nodes: Collection<Artifact>
         get() = artifacts
@@ -94,8 +111,6 @@ class Artifact(val name: String, override val id: Int) : GraphNode {
 
     private var pos: Int = 0
 
-    private var white: Boolean = false
-
     override val preferredPos: Int
         get() = 0
 
@@ -108,7 +123,6 @@ class Artifact(val name: String, override val id: Int) : GraphNode {
     init {
         level = 0
         pos = 0
-        white = true
     }
 
     fun getPos(): Int {
@@ -125,14 +139,6 @@ class Artifact(val name: String, override val id: Int) : GraphNode {
 
     override fun setLevel(level: Int) {
         this.level = level
-    }
-
-    override fun setWhite() {
-        white = true
-    }
-
-    override fun setBlack() {
-        white = false
     }
 
     override fun toString(): String {

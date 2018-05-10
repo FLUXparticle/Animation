@@ -11,7 +11,6 @@ class GraphSolver(graph: Graph) {
     fun solve() {
         val white: MutableSet<GraphNode> = run {
             val nodes = graph.nodes
-            nodes.forEach { it.setBlack() }
             nodes
                     .filter { it.isReferenced }
                     .toMutableSet()
@@ -27,11 +26,10 @@ class GraphSolver(graph: Graph) {
 
             for (graphNode in level) {
                 graphNode.setLevel(levelIndex)
-                graphNode.setWhite()
             }
             levelIndex++
 
-            val nodes = level.toTypedArray<GraphNode>()
+            val nodes = level.toTypedArray()
 
             GraphLevelSolver(nodes).solve()
         }

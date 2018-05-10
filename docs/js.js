@@ -673,19 +673,13 @@ var js = function (_, Kotlin) {
   GraphSolver.prototype.solve = function () {
     var tmp$;
     var nodes = this.graph_0.nodes;
+    var destination = ArrayList_init();
     var tmp$_0;
     tmp$_0 = nodes.iterator();
     while (tmp$_0.hasNext()) {
       var element = tmp$_0.next();
-      element.setBlack();
-    }
-    var destination = ArrayList_init();
-    var tmp$_1;
-    tmp$_1 = nodes.iterator();
-    while (tmp$_1.hasNext()) {
-      var element_0 = tmp$_1.next();
-      if (element_0.isReferenced)
-        destination.add_11rb$(element_0);
+      if (element.isReferenced)
+        destination.add_11rb$(element);
     }
     var white = toMutableSet(destination);
     var levelIndex = 0;
@@ -699,7 +693,6 @@ var js = function (_, Kotlin) {
       while (tmp$.hasNext()) {
         var graphNode = tmp$.next();
         graphNode.setLevel_za3lpa$(levelIndex);
-        graphNode.setWhite();
       }
       levelIndex = levelIndex + 1 | 0;
       var nodes_0 = copyToArray(level);

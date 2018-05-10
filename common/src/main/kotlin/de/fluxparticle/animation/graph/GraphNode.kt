@@ -14,8 +14,4 @@ interface GraphNode {
 
     fun setLevel(level: Int)
 
-    fun setWhite()
-
-    fun setBlack()
-
 }

@@ -14,4 +14,12 @@ public class Module {
         this.deps = deps;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String[] getDeps() {
+        return deps;
+    }
+
 }

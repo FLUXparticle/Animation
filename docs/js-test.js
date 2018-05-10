@@ -323,9 +323,47 @@ this['js-test'] = function (_, Kotlin, $module$js) {
     simpleName: 'DependencyBox',
     interfaces: [Box]
   };
-  function DependencyGraph(artifacts, dependencies) {
-    this.artifacts_0 = artifacts;
-    this.dependencies_0 = dependencies;
+  function DependencyGraph(graphDescription) {
+    this.dependencies_0 = null;
+    this.artifacts_0 = null;
+    var $receiver = graphDescription.keys;
+    var destination = ArrayList_init(collectionSizeOrDefault($receiver, 10));
+    var tmp$, tmp$_0;
+    var index = 0;
+    tmp$ = $receiver.iterator();
+    while (tmp$.hasNext()) {
+      var item = tmp$.next();
+      destination.add_11rb$(new Artifact(item, (tmp$_0 = index, index = tmp$_0 + 1 | 0, tmp$_0)));
+    }
+    var capacity = coerceAtLeast(mapCapacity(collectionSizeOrDefault(destination, 10)), 16);
+    var destination_0 = LinkedHashMap_init(capacity);
+    var tmp$_1;
+    tmp$_1 = destination.iterator();
+    while (tmp$_1.hasNext()) {
+      var element = tmp$_1.next();
+      destination_0.put_xwzc9p$(element.name, element);
+    }
+    var artifactsMap = destination_0;
+    this.artifacts_0 = artifactsMap.values;
+    var $receiver_0 = this.artifacts_0;
+    var capacity_0 = coerceAtLeast(mapCapacity(collectionSizeOrDefault($receiver_0, 10)), 16);
+    var destination_1 = LinkedHashMap_init(capacity_0);
+    var tmp$_2;
+    tmp$_2 = $receiver_0.iterator();
+    while (tmp$_2.hasNext()) {
+      var element_0 = tmp$_2.next();
+      var tmp$_3 = destination_1.put_xwzc9p$;
+      var tmp$_4 = element_0.id;
+      var $receiver_1 = ensureNotNull(graphDescription.get_11rb$(element_0.name));
+      var destination_2 = ArrayList_init($receiver_1.length);
+      var tmp$_5;
+      for (tmp$_5 = 0; tmp$_5 !== $receiver_1.length; ++tmp$_5) {
+        var item_0 = $receiver_1[tmp$_5];
+        destination_2.add_11rb$(ensureNotNull(artifactsMap.get_11rb$(item_0)));
+      }
+      tmp$_3.call(destination_1, tmp$_4, destination_2);
+    }
+    this.dependencies_0 = destination_1;
   }
   Object.defineProperty(DependencyGraph.prototype, 'nodes', {
     get: function () {
@@ -345,10 +383,8 @@ this['js-test'] = function (_, Kotlin, $module$js) {
     this.id_9kqlgj$_0 = id;
     this.level_0 = 0;
     this.pos_0 = 0;
-    this.white_0 = false;
     this.level_0 = 0;
     this.pos_0 = 0;
-    this.white_0 = true;
   }
   Object.defineProperty(Artifact.prototype, 'id', {
     get: function () {
@@ -381,12 +417,6 @@ this['js-test'] = function (_, Kotlin, $module$js) {
   };
   Artifact.prototype.setLevel_za3lpa$ = function (level) {
     this.level_0 = level;
-  };
-  Artifact.prototype.setWhite = function () {
-    this.white_0 = true;
-  };
-  Artifact.prototype.setBlack = function () {
-    this.white_0 = false;
   };
   Artifact.prototype.toString = function () {
     return this.name;
@@ -449,44 +479,7 @@ this['js-test'] = function (_, Kotlin, $module$js) {
       var deps = b.deps;
       graphDescription.put_xwzc9p$(name, deps);
     }
-    var $receiver = graphDescription.keys;
-    var destination = ArrayList_init(collectionSizeOrDefault($receiver, 10));
-    var tmp$_0, tmp$_0_0;
-    var index = 0;
-    tmp$_0 = $receiver.iterator();
-    while (tmp$_0.hasNext()) {
-      var item = tmp$_0.next();
-      destination.add_11rb$(new Artifact(item, (tmp$_0_0 = index, index = tmp$_0_0 + 1 | 0, tmp$_0_0)));
-    }
-    var capacity = coerceAtLeast(mapCapacity(collectionSizeOrDefault(destination, 10)), 16);
-    var destination_0 = LinkedHashMap_init(capacity);
-    var tmp$_1;
-    tmp$_1 = destination.iterator();
-    while (tmp$_1.hasNext()) {
-      var element = tmp$_1.next();
-      destination_0.put_xwzc9p$(element.name, element);
-    }
-    var artifacts = destination_0;
-    var $receiver_0 = artifacts.values;
-    var capacity_0 = coerceAtLeast(mapCapacity(collectionSizeOrDefault($receiver_0, 10)), 16);
-    var destination_1 = LinkedHashMap_init(capacity_0);
-    var tmp$_2;
-    tmp$_2 = $receiver_0.iterator();
-    while (tmp$_2.hasNext()) {
-      var element_0 = tmp$_2.next();
-      var tmp$_3 = destination_1.put_xwzc9p$;
-      var tmp$_4 = element_0.id;
-      var $receiver_1 = ensureNotNull(graphDescription.get_11rb$(element_0.name));
-      var destination_2 = ArrayList_init($receiver_1.length);
-      var tmp$_5;
-      for (tmp$_5 = 0; tmp$_5 !== $receiver_1.length; ++tmp$_5) {
-        var item_0 = $receiver_1[tmp$_5];
-        destination_2.add_11rb$(ensureNotNull(artifacts.get_11rb$(item_0)));
-      }
-      tmp$_3.call(destination_1, tmp$_4, destination_2);
-    }
-    var dependencies = destination_1;
-    var dependencyGraph = new DependencyGraph(artifacts.values, dependencies);
+    var dependencyGraph = new DependencyGraph(graphDescription);
     var algorithms = listOf([new DependencyAlgorithm(dependencyGraph), new BubbleSortAlgorithm()]);
     var time = {v: 0.0};
     window.onload = start$lambda(algorithms, time);

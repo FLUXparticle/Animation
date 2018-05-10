@@ -20,16 +20,7 @@ fun start(input: dynamic) {
         graphDescription[name] = deps
     }
 
-    val artifacts = graphDescription.keys
-            .mapIndexed { index, name -> Artifact(name, index) }
-            .associateBy { it.name }
-
-    val dependencies = artifacts.values.associateBy(
-            keySelector = { it.id },
-            valueTransform = { graphDescription[it.name]!!.map { artifacts[it]!! } }
-    )
-
-    val dependencyGraph = DependencyGraph(artifacts.values, dependencies)
+    val dependencyGraph = DependencyGraph(graphDescription)
 
     val algorithms: List<Algorithm> = listOf(
             DependencyAlgorithm(dependencyGraph),
