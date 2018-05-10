@@ -1,6 +1,8 @@
 package de.fluxparticle.animation.graph
 
-class GraphLevelSolver(private val nodes: Array<GraphNode>) {
+class GraphLevelSolver(nodes: List<GraphNode>) {
+
+    private val nodes: List<GraphNode> = nodes.sortedBy { it.preferredPos }
 
     private val maxK: Int
 
@@ -39,8 +41,6 @@ class GraphLevelSolver(private val nodes: Array<GraphNode>) {
     }
 
     init {
-        nodes.sortBy { it.preferredPos }
-
         var maxK = 0
         for (graphNode in nodes) {
             maxK += graphNode.size

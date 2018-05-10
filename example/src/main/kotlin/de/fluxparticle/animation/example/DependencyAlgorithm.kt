@@ -77,7 +77,7 @@ private class DependencyBox(private val animationQueue: AnimationQueue, private 
     
 }
 
-class DependencyGraph(graphDescription: MutableMap<String, Array<String>>) : Graph {
+class DependencyGraph(graphDescription: Map<String, Array<String>>) : Graph {
 
     private val dependencies: Map<Int, List<Artifact>>
 

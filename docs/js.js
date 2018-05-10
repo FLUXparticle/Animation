@@ -527,7 +527,6 @@ var js = function (_, Kotlin) {
     simpleName: 'Graph',
     interfaces: []
   };
-  var sortWith = Kotlin.kotlin.collections.sortWith_iwcb0m$;
   var compareBy$lambda_0 = wrapFunction(function () {
     var compareValues = Kotlin.kotlin.comparisons.compareValues_s00gnj$;
     return function (closure$selector) {
@@ -545,24 +544,20 @@ var js = function (_, Kotlin) {
   };
   Comparator$ObjectLiteral_0.$metadata$ = {kind: Kind_CLASS, interfaces: [Comparator]};
   function GraphLevelSolver(nodes) {
-    this.nodes_0 = nodes;
+    this.nodes_0 = sortedWith(nodes, new Comparator$ObjectLiteral_0(compareBy$lambda_0(GraphLevelSolver$nodes$lambda)));
     this.maxK_0 = 0;
     this.min_0 = 0;
     this.max_0 = 0;
-    var tmp$, tmp$_0;
-    var $receiver = this.nodes_0;
-    if ($receiver.length > 1) {
-      sortWith($receiver, new Comparator$ObjectLiteral_0(compareBy$lambda_0(GraphLevelSolver_init$lambda)));
-    }
+    var tmp$;
     var maxK = 0;
-    tmp$ = this.nodes_0;
-    for (tmp$_0 = 0; tmp$_0 !== tmp$.length; ++tmp$_0) {
-      var graphNode = tmp$[tmp$_0];
+    tmp$ = nodes.iterator();
+    while (tmp$.hasNext()) {
+      var graphNode = tmp$.next();
       maxK = maxK + graphNode.size | 0;
     }
     this.maxK_0 = maxK;
-    this.min_0 = this.nodes_0[0].preferredPos - maxK | 0;
-    this.max_0 = this.nodes_0[this.nodes_0.length - 1 | 0].preferredPos + maxK | 0;
+    this.min_0 = nodes.get_za3lpa$(0).preferredPos - maxK | 0;
+    this.max_0 = nodes.get_za3lpa$(nodes.size - 1 | 0).preferredPos + maxK | 0;
   }
   function GraphLevelSolver$Range(min, max) {
     this.min_0 = min;
@@ -603,7 +598,7 @@ var js = function (_, Kotlin) {
     var k = this.findK_0();
     var ranges = this.mkRanges_0(k);
     for (var i = 0; i !== ranges.length; ++i) {
-      this.nodes_0[i].setPos_za3lpa$(ranges[i].center);
+      this.nodes_0.get_za3lpa$(i).setPos_za3lpa$(ranges[i].center);
     }
   };
   GraphLevelSolver.prototype.findK_0 = function () {
@@ -631,7 +626,7 @@ var js = function (_, Kotlin) {
   };
   var Array_0 = Array;
   GraphLevelSolver.prototype.mkRanges_0 = function (k) {
-    var array = Array_0(this.nodes_0.length);
+    var array = Array_0(this.nodes_0.size);
     var tmp$;
     tmp$ = array.length - 1 | 0;
     for (var i = 0; i <= tmp$; i++) {
@@ -639,18 +634,18 @@ var js = function (_, Kotlin) {
     }
     var ranges = array;
     for (var i_0 = 0; i_0 !== ranges.length; ++i_0) {
-      ranges[i_0].setMin_za3lpa$(this.nodes_0[i_0].preferredPos - k | 0);
-      ranges[i_0].setMax_za3lpa$(this.nodes_0[i_0].preferredPos + k | 0);
+      ranges[i_0].setMin_za3lpa$(this.nodes_0.get_za3lpa$(i_0).preferredPos - k | 0);
+      ranges[i_0].setMax_za3lpa$(this.nodes_0.get_za3lpa$(i_0).preferredPos + k | 0);
     }
     for (var i_1 = 1; i_1 < ranges.length; i_1++) {
-      ranges[i_1].setMin_za3lpa$(ranges[i_1 - 1 | 0].getMin() + this.nodes_0[i_1 - 1 | 0].size | 0);
+      ranges[i_1].setMin_za3lpa$(ranges[i_1 - 1 | 0].getMin() + this.nodes_0.get_za3lpa$(i_1 - 1 | 0).size | 0);
     }
     for (var i_2 = ranges.length - 2 | 0; i_2 >= 0; i_2--) {
-      ranges[i_2].setMax_za3lpa$(ranges[i_2 + 1 | 0].getMax() - this.nodes_0[i_2].size | 0);
+      ranges[i_2].setMax_za3lpa$(ranges[i_2 + 1 | 0].getMax() - this.nodes_0.get_za3lpa$(i_2).size | 0);
     }
     return ranges;
   };
-  function GraphLevelSolver_init$lambda(it) {
+  function GraphLevelSolver$nodes$lambda(it) {
     return it.preferredPos;
   }
   GraphLevelSolver.$metadata$ = {
@@ -669,7 +664,6 @@ var js = function (_, Kotlin) {
     this.graph_0 = null;
     this.graph_0 = new GraphWrapper(graph);
   }
-  var copyToArray = Kotlin.kotlin.collections.copyToArray;
   GraphSolver.prototype.solve = function () {
     var tmp$;
     var nodes = this.graph_0.nodes;
@@ -695,8 +689,7 @@ var js = function (_, Kotlin) {
         graphNode.setLevel_za3lpa$(levelIndex);
       }
       levelIndex = levelIndex + 1 | 0;
-      var nodes_0 = copyToArray(level);
-      (new GraphLevelSolver(nodes_0)).solve();
+      (new GraphLevelSolver(level)).solve();
     }
   };
   var Collection = Kotlin.kotlin.collections.Collection;

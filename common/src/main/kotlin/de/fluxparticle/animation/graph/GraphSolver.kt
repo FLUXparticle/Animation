@@ -29,13 +29,11 @@ class GraphSolver(graph: Graph) {
             }
             levelIndex++
 
-            val nodes = level.toTypedArray()
-
-            GraphLevelSolver(nodes).solve()
+            GraphLevelSolver(level).solve()
         }
     }
 
-    private fun nextLevel(white: Set<GraphNode>): Collection<GraphNode> {
+    private fun nextLevel(white: Set<GraphNode>): List<GraphNode> {
         return white
                 .filter { b ->
                     white
