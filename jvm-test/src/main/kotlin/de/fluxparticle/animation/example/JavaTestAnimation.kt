@@ -21,6 +21,8 @@ import org.fxmisc.easybind.EasyBind
  */
 abstract class JavaTestAnimation : Application() {
 
+    protected abstract val title: String
+
     protected abstract val algorithm: Algorithm
 
     private lateinit var animationSide: Pane
@@ -87,7 +89,7 @@ abstract class JavaTestAnimation : Application() {
 
         val scene = Scene(root, 1280.0, 720.0)
         primaryStage.scene = scene
-        primaryStage.title = "Bubble Sort Animation"
+        primaryStage.title = title
         primaryStage.show()
 
         scene.setOnMouseClicked { event -> next() }

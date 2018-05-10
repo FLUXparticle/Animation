@@ -17,6 +17,11 @@ allprojects {
             mavenCentral()
         }
     }
+    ext {
+        jetty_version = '9.2.20.v20161216'
+        guice_version = '4.1.0'
+        wicket_version = '7.9.0'
+    }
     repositories {
         mavenLocal()
         mavenCentral()

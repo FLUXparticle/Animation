@@ -3,7 +3,6 @@ package de.fluxparticle.animation.deps;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
-import de.fluxparticle.animation.servlet.graph.Graph;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,7 +15,7 @@ public class AnimationDepsModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        bind(Graph.class).to(DepsGraph.class);
+        bind(ModuleGraph.class).to(DepsGraph.class);
     }
 
     @Provides @Named("root")

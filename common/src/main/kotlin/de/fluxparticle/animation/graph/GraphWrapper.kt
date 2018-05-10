@@ -25,7 +25,7 @@ class GraphWrapper(graph: Graph) : Graph {
         }
 
         val id = node.id
-        nodeMap.put(id, node)
+        nodeMap[id] = node
 
         val edgeSet = HashSet<Int>()
         for (next in graph.getNeighbours(node)) {
@@ -35,7 +35,7 @@ class GraphWrapper(graph: Graph) : Graph {
             }
         }
 
-        edges.put(id, edgeSet)
+        edges[id] = edgeSet
     }
 
     override fun getNeighbours(node: GraphNode): Collection<GraphNode> {

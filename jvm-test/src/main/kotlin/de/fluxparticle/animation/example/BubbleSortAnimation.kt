@@ -7,6 +7,8 @@ import javafx.application.Application
  */
 class BubbleSortAnimation : JavaTestAnimation() {
 
+    override val title = "Bubble Sort Animation"
+
     override val algorithm = BubbleSortAlgorithm()
 
 }

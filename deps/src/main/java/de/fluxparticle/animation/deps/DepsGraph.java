@@ -2,8 +2,6 @@ package de.fluxparticle.animation.deps;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
-import de.fluxparticle.animation.servlet.data.Module;
-import de.fluxparticle.animation.servlet.graph.Graph;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,7 +15,7 @@ import static pl.touk.throwing.ThrowingFunction.unchecked;
 /**
  * Created by sreinck on 09.05.18.
  */
-public class DepsGraph implements Graph {
+public class DepsGraph implements ModuleGraph {
 
     private static final Pattern PATTERN = Pattern.compile("project\\(\":([^\"]*)\"\\)");
 

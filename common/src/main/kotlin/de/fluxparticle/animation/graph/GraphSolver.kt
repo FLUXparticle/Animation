@@ -37,9 +37,10 @@ class GraphSolver(graph: Graph) {
 
     private fun nextLevel(white: Set<GraphNode>): Collection<GraphNode> {
         return white
-                .filter { b -> white
-                        .filter { a -> a !== b }
-                        .none { a -> hasPath(a, b) }
+                .filter { b ->
+                    white
+                            .filter { a -> a !== b }
+                            .none { a -> hasPath(a, b) }
                 }
                 .toList()
     }
