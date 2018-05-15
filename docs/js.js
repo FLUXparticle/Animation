@@ -1676,20 +1676,12 @@ var js = function (_, Kotlin) {
   }
   function JsNodeCreator() {
   }
-  function JsNodeCreator$visitPath$lambda$lambda(x, y) {
-    return 'M' + x + ' ' + y;
-  }
-  function JsNodeCreator$visitPath$lambda$lambda_0(x, y) {
-    return ' L' + x + ' ' + y;
-  }
   JsNodeCreator.prototype.visitPath_eorgsy$ = function (elementPath) {
     var $receiver = newSVGPath();
-    var origin = elementPath.origin.x.combine_oj3ufw$(elementPath.origin.y, JsNodeCreator$visitPath$lambda$lambda);
-    var dest = elementPath.dest.x.combine_oj3ufw$(elementPath.dest.y, JsNodeCreator$visitPath$lambda$lambda_0);
-    var d = origin.combine_oj3ufw$(dest, getCallableRef('concat', function ($receiver, str) {
-      return $receiver.concat(str);
-    }));
-    bindAttribute($receiver, 'd', d);
+    var path = this.mkDynamicCurveEastEast_0(elementPath.origin, elementPath.dest);
+    var withArrow = this.addDynamicArrow_0(path, elementPath.dest);
+    bindAttribute($receiver, 'd', withArrow);
+    $receiver.setAttribute('fill', 'transparent');
     $receiver.setAttribute('stroke', 'black');
     $receiver.setAttribute('stroke-width', '2');
     return $receiver;
@@ -1726,6 +1718,105 @@ var js = function (_, Kotlin) {
     var translate = elementObject.translate.value.map_4px9ds$(JsNodeCreator$visitObject$lambda$lambda);
     bindAttribute($receiver, 'transform', translate);
     return $receiver;
+  };
+  function JsNodeCreator$mkDynamicCurveEastEast$lambda(pOrigin, pDest) {
+    var dx = pDest.first - pOrigin.first;
+    var dy = pDest.second - pOrigin.second;
+    var x = 4.0 * dx * dx + 3.0 * dy * dy;
+    return Math_0.sqrt(x) - dx;
+  }
+  function JsNodeCreator$mkDynamicCurveEastEast$lambda_0(it) {
+    return it / 3.0;
+  }
+  function JsNodeCreator$mkDynamicCurveEastEast$lambda_1(x, v) {
+    return x + v;
+  }
+  function JsNodeCreator$mkDynamicCurveEastEast$lambda_2(x, v) {
+    return x - v;
+  }
+  JsNodeCreator.prototype.mkDynamicCurveEastEast_0 = function (origin, dest) {
+    var vOrigin = origin.x.combine_oj3ufw$(origin.y, getCallableRef('Pair', function (first, second) {
+      return new Pair(first, second);
+    }));
+    var vDest = dest.x.combine_oj3ufw$(dest.y, getCallableRef('Pair', function (first, second) {
+      return new Pair(first, second);
+    }));
+    var vValue = vOrigin.combine_oj3ufw$(vDest, JsNodeCreator$mkDynamicCurveEastEast$lambda);
+    var vValue3 = vValue.map_4px9ds$(JsNodeCreator$mkDynamicCurveEastEast$lambda_0);
+    var controlX1 = origin.x.combine_oj3ufw$(vValue3, JsNodeCreator$mkDynamicCurveEastEast$lambda_1);
+    var controlY1 = origin.y;
+    var controlX2 = dest.x.combine_oj3ufw$(vValue3, JsNodeCreator$mkDynamicCurveEastEast$lambda_2);
+    var controlY2 = dest.y;
+    return this.mkDynamicCurve_0(origin, dest, DynamicPoint2D_init(controlX1, controlY1), DynamicPoint2D_init(controlX2, controlY2));
+  };
+  function JsNodeCreator$mkDynamicCurve$lambda(x, y) {
+    return x.toString() + ' ' + y;
+  }
+  function JsNodeCreator$mkDynamicCurve$lambda_0(x, y) {
+    return x.toString() + ' ' + y;
+  }
+  function JsNodeCreator$mkDynamicCurve$lambda_1(x, y) {
+    return x.toString() + ' ' + y;
+  }
+  function JsNodeCreator$mkDynamicCurve$lambda_2(x, y) {
+    return x.toString() + ' ' + y;
+  }
+  function JsNodeCreator$mkDynamicCurve$lambda_3(c1, c2) {
+    return c1 + ', ' + c2;
+  }
+  function JsNodeCreator$mkDynamicCurve$lambda_4(c, d) {
+    return c + ', ' + d;
+  }
+  function JsNodeCreator$mkDynamicCurve$lambda_5(p, c) {
+    return 'M ' + p + ' C ' + c;
+  }
+  JsNodeCreator.prototype.mkDynamicCurve_0 = function (origin, dest, control1, control2) {
+    var p0 = origin.x.combine_oj3ufw$(origin.y, JsNodeCreator$mkDynamicCurve$lambda);
+    var p1 = control1.x.combine_oj3ufw$(control1.y, JsNodeCreator$mkDynamicCurve$lambda_0);
+    var p2 = control2.x.combine_oj3ufw$(control2.y, JsNodeCreator$mkDynamicCurve$lambda_1);
+    var p3 = dest.x.combine_oj3ufw$(dest.y, JsNodeCreator$mkDynamicCurve$lambda_2);
+    var control = p1.combine_oj3ufw$(p2, JsNodeCreator$mkDynamicCurve$lambda_3);
+    var curve = control.combine_oj3ufw$(p3, JsNodeCreator$mkDynamicCurve$lambda_4);
+    return p0.combine_oj3ufw$(curve, JsNodeCreator$mkDynamicCurve$lambda_5);
+  };
+  function JsNodeCreator$addDynamicArrow$lambda(y) {
+    return y - 5;
+  }
+  function JsNodeCreator$addDynamicArrow$lambda_0(x, y) {
+    return 'M ' + x + ' ' + y;
+  }
+  function JsNodeCreator$addDynamicArrow$lambda_1(y) {
+    return y + 5;
+  }
+  function JsNodeCreator$addDynamicArrow$lambda_2(x, y) {
+    return 'L ' + x + ' ' + y;
+  }
+  function JsNodeCreator$addDynamicArrow$lambda_3(y) {
+    return y + 5;
+  }
+  function JsNodeCreator$addDynamicArrow$lambda_4(x, y) {
+    return 'L ' + x + ' ' + y;
+  }
+  function JsNodeCreator$addDynamicArrow$lambda_5(u, v) {
+    return u + ' ' + v;
+  }
+  function JsNodeCreator$addDynamicArrow$lambda_6(u, v) {
+    return u + ' ' + v;
+  }
+  function JsNodeCreator$addDynamicArrow$lambda_7(u, v) {
+    return u + ' ' + v;
+  }
+  JsNodeCreator.prototype.addDynamicArrow_0 = function (path, end) {
+    var x1 = end.x;
+    var y1 = end.y.map_4px9ds$(JsNodeCreator$addDynamicArrow$lambda);
+    var e1 = x1.combine_oj3ufw$(y1, JsNodeCreator$addDynamicArrow$lambda_0);
+    var x2 = end.x.map_4px9ds$(JsNodeCreator$addDynamicArrow$lambda_1);
+    var y2 = end.y;
+    var e2 = x2.combine_oj3ufw$(y2, JsNodeCreator$addDynamicArrow$lambda_2);
+    var x3 = end.x;
+    var y3 = end.y.map_4px9ds$(JsNodeCreator$addDynamicArrow$lambda_3);
+    var e3 = x3.combine_oj3ufw$(y3, JsNodeCreator$addDynamicArrow$lambda_4);
+    return path.combine_oj3ufw$(e1.combine_oj3ufw$(e2, JsNodeCreator$addDynamicArrow$lambda_5).combine_oj3ufw$(e3, JsNodeCreator$addDynamicArrow$lambda_6), JsNodeCreator$addDynamicArrow$lambda_7);
   };
   JsNodeCreator.$metadata$ = {
     kind: Kind_CLASS,

@@ -8,6 +8,7 @@ import de.fluxparticle.animation.elementobject.ElementPath
 import de.fluxparticle.animation.graph.Graph
 import de.fluxparticle.animation.graph.GraphNode
 import de.fluxparticle.animation.graph.GraphSolver
+import de.fluxparticle.animation.path.ARROW_SIZE
 import de.fluxparticle.animation.point.DynamicPoint2D
 import de.fluxparticle.animation.util.Bounds
 
@@ -61,7 +62,7 @@ private class DependencyBox(private val animationQueue: AnimationQueue, private 
             for (dependency in dependencies) {
                 val toObject = elementObjects[dependency]!!
                 val toCenter = toObject.translate.lastValue()
-                val to = DynamicPoint2D(toCenter.x.value - ElementObject.OPERAND_WIDTH / 2, toCenter.y.value)
+                val to = DynamicPoint2D(toCenter.x.value - ElementObject.OPERAND_WIDTH / 2 - ARROW_SIZE, toCenter.y.value)
                 val path = ElementPath(animationQueue.time, from, to)
                 elementNodes.add(path)
             }

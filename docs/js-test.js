@@ -295,7 +295,7 @@ this['js-test'] = function (_, Kotlin, $module$js) {
         var dependency = tmp$_7.next();
         var toObject = ensureNotNull(elementObjects.get_11rb$(dependency));
         var toCenter = toObject.translate.lastValue();
-        var to = DynamicPoint2D_init(toCenter.x.value - 30, toCenter.y.value);
+        var to = DynamicPoint2D_init(toCenter.x.value - 30 - 5, toCenter.y.value);
         var path = new ElementPath(this.animationQueue_0.time, from, to);
         elementNodes.add_11rb$(path);
       }
