@@ -21,6 +21,7 @@ this['js-test'] = function (_, Kotlin, $module$js) {
   var Pair = Kotlin.kotlin.Pair;
   var ensureNotNull = Kotlin.ensureNotNull;
   var ElementPath = $module$js.de.fluxparticle.animation.elementobject.ElementPath;
+  var getValue = Kotlin.kotlin.collections.getValue_t9ocha$;
   var Graph = $module$js.de.fluxparticle.animation.graph.Graph;
   var GraphNode = $module$js.de.fluxparticle.animation.graph.GraphNode;
   var iterator = Kotlin.kotlin.js.iterator_s8jyvk$;
@@ -301,20 +302,20 @@ this['js-test'] = function (_, Kotlin, $module$js) {
         elementNodes.add_11rb$(path);
       }
     }
-    this.animationQueue_0.with_3gn2hk$(DependencyBox_init$lambda(elementNodes, this));
+    this.animationQueue_0.with_3gn2hk$(DependencyBox_init$lambda(elementNodes));
   }
   Object.defineProperty(DependencyBox.prototype, 'bounds', {
     get: function () {
       return this.bounds_kbilfb$_0;
     }
   });
-  function DependencyBox_init$lambda(closure$elementNodes, this$DependencyBox) {
-    return function (queue, doubleExpression) {
+  function DependencyBox_init$lambda(closure$elementNodes) {
+    return function (queue, f) {
       var tmp$;
       tmp$ = closure$elementNodes.iterator();
       while (tmp$.hasNext()) {
         var elementNode = tmp$.next();
-        this$DependencyBox.animationQueue_0.fadeIn_bq1e3f$(0, elementNode);
+        queue.fadeIn_bq1e3f$(0, elementNode);
       }
       return Unit;
     };
@@ -356,12 +357,12 @@ this['js-test'] = function (_, Kotlin, $module$js) {
       var element_0 = tmp$_2.next();
       var tmp$_3 = destination_1.put_xwzc9p$;
       var tmp$_4 = element_0.id;
-      var $receiver_1 = ensureNotNull(graphDescription.get_11rb$(element_0.name));
+      var $receiver_1 = getValue(graphDescription, element_0.name);
       var destination_2 = ArrayList_init($receiver_1.length);
       var tmp$_5;
       for (tmp$_5 = 0; tmp$_5 !== $receiver_1.length; ++tmp$_5) {
         var item_0 = $receiver_1[tmp$_5];
-        destination_2.add_11rb$(ensureNotNull(artifactsMap.get_11rb$(item_0)));
+        destination_2.add_11rb$(getValue(artifactsMap, item_0));
       }
       tmp$_3.call(destination_1, tmp$_4, destination_2);
     }

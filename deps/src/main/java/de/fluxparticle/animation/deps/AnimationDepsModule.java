@@ -21,7 +21,7 @@ public class AnimationDepsModule extends AbstractModule {
     @Provides @Named("root")
     Path root() {
         Path root = Paths.get("").toAbsolutePath();
-        while (!Files.exists(root.resolve("settings.gradle"))) {
+        while (!Files.exists(root.resolve("settings.gradle.kts"))) {
             root = root.getParent();
         }
         return root;

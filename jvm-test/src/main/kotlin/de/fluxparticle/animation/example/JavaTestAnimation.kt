@@ -40,13 +40,13 @@ abstract class JavaTestAnimation : Application() {
         val root = Pane()
 //        root.background = Background(BackgroundFill(Color.BLACK, null, null))
 
-        root.boundsInLocalProperty().addListener { observable, oldValue, newValue -> println("root: $newValue") }
+        root.boundsInLocalProperty().addListener { _, _, newValue -> println("root: $newValue") }
 
         run {
             animationSide = Pane()
             animationSide.background = Background(BackgroundFill(Color.TRANSPARENT, null, null))
 
-            animationSide.boundsInLocalProperty().addListener { observable, oldValue, newValue -> println("animationSide: $newValue") }
+            animationSide.boundsInLocalProperty().addListener { _, _, newValue -> println("animationSide: $newValue") }
 
             animationSide.prefWidth = 1280.0
             animationSide.prefHeight = 720.0
@@ -92,7 +92,7 @@ abstract class JavaTestAnimation : Application() {
         primaryStage.title = title
         primaryStage.show()
 
-        scene.setOnMouseClicked { event -> next() }
+        scene.setOnMouseClicked { _ -> next() }
     }
 
     operator fun next() {

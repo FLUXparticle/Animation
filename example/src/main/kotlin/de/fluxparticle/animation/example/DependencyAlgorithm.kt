@@ -68,9 +68,9 @@ private class DependencyBox(private val animationQueue: AnimationQueue, private 
             }
         }
 
-        animationQueue.with { queue, doubleExpression ->
+        animationQueue.with { queue, _ ->
             for (elementNode in elementNodes) {
-                animationQueue.fadeIn(0, elementNode)
+                queue.fadeIn(0, elementNode)
             }
         }
 
@@ -93,7 +93,7 @@ class DependencyGraph(graphDescription: Map<String, Array<String>>) : Graph {
 
         dependencies = artifacts.associateBy(
                 keySelector = { it.id },
-                valueTransform = { graphDescription[it.name]!!.map { artifactsMap[it]!! } }
+                valueTransform = { artifact -> graphDescription.getValue(artifact.name).map { artifactsMap.getValue(it) } }
         )
     }
 
