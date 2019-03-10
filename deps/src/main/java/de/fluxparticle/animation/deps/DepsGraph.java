@@ -21,7 +21,7 @@ public class DepsGraph implements ModuleGraph {
 
     private static final Pattern INCLUDE = Pattern.compile("'");
 
-    private static final Pattern PROJECT = Pattern.compile("project\\(\":([^\"]*)\"\\)");
+    private static final Pattern PROJECT = Pattern.compile("project\\((path: )?\":([^\"]*)\"[^)]*\\)");
 
     private final Path root;
 
@@ -46,7 +46,7 @@ public class DepsGraph implements ModuleGraph {
                                         .flatMap(line -> {
                                             Matcher m = PROJECT.matcher(line);
                                             if (m.find()) {
-                                                return Stream.of(m.group(1));
+                                                return Stream.of(m.group(2));
                                             } else {
                                                 return Stream.empty();
                                             }

@@ -11,7 +11,7 @@ repositories {
 }
 
 dependencies {
-    compile project(":js")
+    compile project(path: ":js", configuration: 'default')
     expectedBy project(":example")
     testCompile "org.jetbrains.kotlin:kotlin-test-js:$kotlin_version"
 }

@@ -23,7 +23,7 @@ var js = function (_, Kotlin) {
   var HashSet_init = Kotlin.kotlin.collections.HashSet_init_287e2$;
   var equals = Kotlin.equals;
   var println = Kotlin.kotlin.io.println_s8jyv4$;
-  var StringBuilder = Kotlin.kotlin.text.StringBuilder;
+  var StringBuilder_init = Kotlin.kotlin.text.StringBuilder_init;
   var IllegalArgumentException_init = Kotlin.kotlin.IllegalArgumentException_init_pdl1vj$;
   var to = Kotlin.kotlin.to_ujzrz7$;
   var mutableMapOf = Kotlin.kotlin.collections.mutableMapOf_qfcya0$;
@@ -72,12 +72,13 @@ var js = function (_, Kotlin) {
   function AnimationCollection() {
     this.animations_0 = HashMap_init();
   }
+  var ArrayList_init_0 = Kotlin.kotlin.collections.ArrayList_init_287e2$;
   AnimationCollection.prototype.add_1didyy$ = function (priority, Timeframe) {
     var $receiver = this.animations_0;
     var tmp$;
     var value = $receiver.get_11rb$(priority);
     if (value == null) {
-      var answer = ArrayList_init();
+      var answer = ArrayList_init_0();
       $receiver.put_xwzc9p$(priority, answer);
       tmp$ = answer;
     }
@@ -219,7 +220,7 @@ var js = function (_, Kotlin) {
   function AnimationQueue(clip) {
     AnimationQueue$Companion_getInstance();
     this.clip = clip;
-    this.group_0 = ArrayList_init();
+    this.group_0 = ArrayList_init_0();
     this.transitions_vnden5$_0 = this.transitions_vnden5$_0;
   }
   Object.defineProperty(AnimationQueue.prototype, 'transitions_0', {
@@ -667,7 +668,7 @@ var js = function (_, Kotlin) {
   GraphSolver.prototype.solve = function () {
     var tmp$;
     var nodes = this.graph_0.nodes;
-    var destination = ArrayList_init();
+    var destination = ArrayList_init_0();
     var tmp$_0;
     tmp$_0 = nodes.iterator();
     while (tmp$_0.hasNext()) {
@@ -694,12 +695,12 @@ var js = function (_, Kotlin) {
   };
   var Collection = Kotlin.kotlin.collections.Collection;
   GraphSolver.prototype.nextLevel_0 = function (white) {
-    var destination = ArrayList_init();
+    var destination = ArrayList_init_0();
     var tmp$;
     tmp$ = white.iterator();
-    while (tmp$.hasNext()) {
+    loop_label: while (tmp$.hasNext()) {
       var element = tmp$.next();
-      var destination_0 = ArrayList_init();
+      var destination_0 = ArrayList_init_0();
       var tmp$_0;
       tmp$_0 = white.iterator();
       while (tmp$_0.hasNext()) {
@@ -733,7 +734,7 @@ var js = function (_, Kotlin) {
   GraphSolver.prototype.hasPath_0 = function (a, b) {
     var tmp$;
     var visited = HashSet_init();
-    var queue = ArrayList_init();
+    var queue = ArrayList_init_0();
     queue.add_11rb$(a);
     visited.add_11rb$(a);
     while (!queue.isEmpty()) {
@@ -815,7 +816,7 @@ var js = function (_, Kotlin) {
   function Log(level) {
     Log$Companion_getInstance();
     this.indent_0 = null;
-    var sb = new StringBuilder();
+    var sb = StringBuilder_init();
     for (var i = 0; i < level; i++) {
       sb.append_s8itvh$(32);
       sb.append_s8itvh$(32);
@@ -1402,7 +1403,7 @@ var js = function (_, Kotlin) {
   };
   function Value(v) {
     this.v_r30w56$_0 = v;
-    this.observers_u76f1v$_0 = ArrayList_init();
+    this.observers_u76f1v$_0 = ArrayList_init_0();
   }
   Object.defineProperty(Value.prototype, 'value', {
     get: function () {

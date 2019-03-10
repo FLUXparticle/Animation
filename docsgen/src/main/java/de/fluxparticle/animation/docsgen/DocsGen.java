@@ -62,10 +62,12 @@ public class DocsGen {
             String script = group + ".js";
             matcher.appendReplacement(sb, script);
             try (InputStream inputStream = classLoader.getResourceAsStream(script)) {
-                System.out.println("Copy " + script + " ...");
-                Files.copy(inputStream, docs.resolve(script), REPLACE_EXISTING);
-            } catch (NullPointerException e) {
-                System.out.println(script + " not found");
+                if (inputStream != null) {
+                    System.out.println("Copy " + script + " ...");
+                    Files.copy(inputStream, docs.resolve(script), REPLACE_EXISTING);
+                } else {
+                    System.out.println(script + " not found");
+                }
             }
         }
         matcher.appendTail(sb);

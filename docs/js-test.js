@@ -205,9 +205,14 @@ this['js-test'] = function (_, Kotlin, $module$js) {
   var collectionSizeOrDefault = Kotlin.kotlin.collections.collectionSizeOrDefault_ba2ldo$;
   var mapCapacity = Kotlin.kotlin.collections.mapCapacity_za3lpa$;
   var coerceAtLeast = Kotlin.kotlin.ranges.coerceAtLeast_dqglrj$;
-  var LinkedHashMap_init = Kotlin.kotlin.collections.LinkedHashMap_init_xf5xz2$;
+  var LinkedHashMap_init = Kotlin.kotlin.collections.LinkedHashMap_init_bwtc7$;
   var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_ww73n8$;
   var UnsupportedOperationException_init = Kotlin.kotlin.UnsupportedOperationException_init_pdl1vj$;
+  var Regex_init = Kotlin.kotlin.text.Regex_init_61zpoe$;
+  var take = Kotlin.kotlin.collections.take_ba2ldo$;
+  var emptyList = Kotlin.kotlin.collections.emptyList_287e2$;
+  var copyToArray = Kotlin.kotlin.collections.copyToArray;
+  var ArrayList_init_0 = Kotlin.kotlin.collections.ArrayList_init_287e2$;
   function DependencyBox(animationQueue, dependencyGraph) {
     this.animationQueue_0 = animationQueue;
     this.dependencyGraph_0 = dependencyGraph;
@@ -245,14 +250,10 @@ this['js-test'] = function (_, Kotlin, $module$js) {
     var destination_1 = LinkedHashMap_init(mapCapacity(centers.size));
     var tmp$_2;
     tmp$_2 = centers.entries.iterator();
-    while (tmp$_2.hasNext()) {
+    loop_label: while (tmp$_2.hasNext()) {
       var element_0 = tmp$_2.next();
       var tmp$_3 = destination_1.put_xwzc9p$;
       var tmp$_4 = element_0.key;
-      var Regex_init = Kotlin.kotlin.text.Regex_init_61zpoe$;
-      var take = Kotlin.kotlin.collections.take_ba2ldo$;
-      var emptyList = Kotlin.kotlin.collections.emptyList_287e2$;
-      var copyToArray = Kotlin.kotlin.collections.copyToArray;
       var artifact = element_0.key;
       var center = element_0.value;
       var tmp$_5 = artifact.toString();
@@ -278,7 +279,7 @@ this['js-test'] = function (_, Kotlin, $module$js) {
       tmp$_3.call(destination_1, tmp$_4, elementObject);
     }
     var elementObjects = destination_1;
-    var elementNodes = ArrayList_init();
+    var elementNodes = ArrayList_init_0();
     elementNodes.addAll_brywnq$(elementObjects.values);
     var tmp$_6;
     tmp$_6 = elementObjects.entries.iterator();
@@ -323,6 +324,7 @@ this['js-test'] = function (_, Kotlin, $module$js) {
     simpleName: 'DependencyBox',
     interfaces: [Box]
   };
+  var checkIndexOverflow = Kotlin.kotlin.collections.checkIndexOverflow_za3lpa$;
   function DependencyGraph(graphDescription) {
     this.dependencies_0 = null;
     this.artifacts_0 = null;
@@ -333,7 +335,7 @@ this['js-test'] = function (_, Kotlin, $module$js) {
     tmp$ = $receiver.iterator();
     while (tmp$.hasNext()) {
       var item = tmp$.next();
-      destination.add_11rb$(new Artifact(item, (tmp$_0 = index, index = tmp$_0 + 1 | 0, tmp$_0)));
+      destination.add_11rb$(new Artifact(item, checkIndexOverflow((tmp$_0 = index, index = tmp$_0 + 1 | 0, tmp$_0))));
     }
     var capacity = coerceAtLeast(mapCapacity(collectionSizeOrDefault(destination, 10)), 16);
     var destination_0 = LinkedHashMap_init(capacity);

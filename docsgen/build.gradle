@@ -1,10 +1,8 @@
-apply plugin: 'kotlin'
+apply plugin: 'java'
 
 dependencies {
-    compile project(":js-test")
+    compile project(path: ":js-test", configuration: 'default')
     compile project(":deps")
-
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
     compile group: 'com.google.code.gson', name: 'gson', version: '2.8.4'
 
@@ -13,7 +11,7 @@ dependencies {
 
     compile group: 'com.google.inject.extensions', name: 'guice-servlet', version: guice_version
 
-    compile group: 'org.eclipse.jetty', name: 'jetty-servlet', version: jetty_version
+    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
 
     runtime "junit:junit:4.12"
 }
